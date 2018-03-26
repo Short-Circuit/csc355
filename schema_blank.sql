@@ -14,7 +14,10 @@ CREATE TABLE `users` (
 	`username`       VARCHAR(32)  NOT NULL,
 	`email`          VARCHAR(256) NOT NULL,
 	`email_verified` TINYINT(1)   NOT NULL DEFAULT 0,
+	`password_hash`  BINARY(64)   NOT NULL,
+	`password_salt`  BINARY(32)   NOT NULL,
 	UNIQUE KEY (`username`),
+	UNIQUE KEY (`email`),
 	PRIMARY KEY (`id`)
 );
 
@@ -23,7 +26,8 @@ CREATE TABLE `email_verification` (
 	`id`                INTEGER      NOT NULL AUTO_INCREMENT,
 	`user_id`           INTEGER      NOT NULL,
 	`verification_code` CHARACTER(8) NOT NULL,
-	FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+	FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+		ON DELETE CASCADE,
 	UNIQUE KEY (`user_id`),
 	UNIQUE KEY (`verification_code`),
 	PRIMARY KEY (`id`)
@@ -43,7 +47,8 @@ CREATE TABLE `tracks` (
 	`artist`   VARCHAR(128) NOT NULL,
 	`genre`    VARCHAR(64),
 	`album_id` INTEGER,
-	FOREIGN KEY (`album_id`) REFERENCES `albums` (`id`),
+	FOREIGN KEY (`album_id`) REFERENCES `albums` (`id`)
+		ON DELETE SET NULL,
 	PRIMARY KEY (`id`)
 );
 
@@ -53,7 +58,8 @@ CREATE TABLE `playlists` (
 	`title`      VARCHAR(255),
 	`creator_id` INTEGER NOT NULL,
 	`genre`      VARCHAR(64),
-	FOREIGN KEY (`creator_id`) REFERENCES `users` (`id`),
+	FOREIGN KEY (`creator_id`) REFERENCES `users` (`id`)
+		ON DELETE CASCADE,
 	PRIMARY KEY (`id`)
 );
 
@@ -62,8 +68,10 @@ CREATE TABLE `playlist_entries` (
 	`playlist_id` INTEGER NOT NULL,
 	`track_id`    INTEGER NOT NULL,
 	`index`       INTEGER NOT NULL,
-	FOREIGN KEY (`playlist_id`) REFERENCES `playlists` (`id`),
-	FOREIGN KEY (`track_id`) REFERENCES `tracks` (`id`),
+	FOREIGN KEY (`playlist_id`) REFERENCES `playlists` (`id`)
+		ON DELETE CASCADE,
+	FOREIGN KEY (`track_id`) REFERENCES `tracks` (`id`)
+		ON DELETE CASCADE,
 	UNIQUE KEY (`playlist_id`, `index`),
 	PRIMARY KEY (`id`)
 );
@@ -73,7 +81,8 @@ CREATE TABLE `featured_tracks` (
 	`track_id`   INTEGER  NOT NULL,
 	`start_date` DATETIME NOT NULL DEFAULT NOW(),
 	`end_date`   DATETIME,
-	FOREIGN KEY (`track_id`) REFERENCES `tracks` (`id`),
+	FOREIGN KEY (`track_id`) REFERENCES `tracks` (`id`)
+		ON DELETE CASCADE,
 	UNIQUE KEY (`track_id`),
 	PRIMARY KEY (`id`)
 );
@@ -83,7 +92,8 @@ CREATE TABLE `featured_albums` (
 	`album_id`   INTEGER  NOT NULL,
 	`start_date` DATETIME NOT NULL DEFAULT NOW(),
 	`end_date`   DATETIME,
-	FOREIGN KEY (`album_id`) REFERENCES `albums` (`id`),
+	FOREIGN KEY (`album_id`) REFERENCES `albums` (`id`)
+		ON DELETE CASCADE,
 	UNIQUE KEY (`album_id`),
 	PRIMARY KEY (`id`)
 );
@@ -93,7 +103,8 @@ CREATE TABLE `featured_playlists` (
 	`playlist_id` INTEGER  NOT NULL,
 	`start_date`  DATETIME NOT NULL DEFAULT NOW(),
 	`end_date`    DATETIME,
-	FOREIGN KEY (`playlist_id`) REFERENCES `playlists` (`id`),
+	FOREIGN KEY (`playlist_id`) REFERENCES `playlists` (`id`)
+		ON DELETE CASCADE,
 	UNIQUE KEY (`playlist_id`),
 	PRIMARY KEY (`id`)
 );
