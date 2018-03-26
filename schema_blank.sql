@@ -1,4 +1,14 @@
 DROP TABLE IF EXISTS `users`;
+DROP TABLE IF EXISTS `featured_playlists`;
+DROP TABLE IF EXISTS `featured_albums`;
+DROP TABLE IF EXISTS `featured_tracks`;
+DROP TABLE IF EXISTS `playlist_entries`;
+DROP TABLE IF EXISTS `playlists`;
+DROP TABLE IF EXISTS `tracks`;
+DROP TABLE IF EXISTS `albums`;
+DROP TABLE IF EXISTS `email_verification`;
+DROP TABLE IF EXISTS `users`;
+
 CREATE TABLE `users` (
 	`id`             INTEGER      NOT NULL AUTO_INCREMENT,
 	`username`       VARCHAR(32)  NOT NULL,
@@ -22,7 +32,8 @@ CREATE TABLE `email_verification` (
 DROP TABLE IF EXISTS `albums`;
 CREATE TABLE `albums` (
 	`id`    INTEGER NOT NULL AUTO_INCREMENT,
-	`title` VARCHAR(256)
+	`title` VARCHAR(256),
+	PRIMARY KEY (`id`)
 );
 
 DROP TABLE IF EXISTS `tracks`;
@@ -46,7 +57,6 @@ CREATE TABLE `playlists` (
 	PRIMARY KEY (`id`)
 );
 
-DROP TABLE IF EXISTS `playlist_entries`;
 CREATE TABLE `playlist_entries` (
 	`id`          INTEGER NOT NULL AUTO_INCREMENT,
 	`playlist_id` INTEGER NOT NULL,
@@ -58,8 +68,6 @@ CREATE TABLE `playlist_entries` (
 	PRIMARY KEY (`id`)
 );
 
-DROP TABLE IF EXISTS `featured_tracks`;
-
 CREATE TABLE `featured_tracks` (
 	`id`         INTEGER  NOT NULL AUTO_INCREMENT,
 	`track_id`   INTEGER  NOT NULL,
@@ -70,8 +78,6 @@ CREATE TABLE `featured_tracks` (
 	PRIMARY KEY (`id`)
 );
 
-DROP TABLE IF EXISTS `featured_albums`;
-
 CREATE TABLE `featured_albums` (
 	`id`         INTEGER  NOT NULL AUTO_INCREMENT,
 	`album_id`   INTEGER  NOT NULL,
@@ -81,9 +87,6 @@ CREATE TABLE `featured_albums` (
 	UNIQUE KEY (`album_id`),
 	PRIMARY KEY (`id`)
 );
-
-
-DROP TABLE IF EXISTS `featured_playlists`;
 
 CREATE TABLE `featured_playlists` (
 	`id`          INTEGER  NOT NULL AUTO_INCREMENT,
