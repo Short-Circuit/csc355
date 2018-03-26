@@ -57,3 +57,40 @@ CREATE TABLE `playlist_entries` (
 	UNIQUE KEY (`playlist_id`, `index`),
 	PRIMARY KEY (`id`)
 );
+
+DROP TABLE IF EXISTS `featured_tracks`;
+
+CREATE TABLE `featured_tracks` (
+	`id`         INTEGER  NOT NULL AUTO_INCREMENT,
+	`track_id`   INTEGER  NOT NULL,
+	`start_date` DATETIME NOT NULL DEFAULT NOW(),
+	`end_date`   DATETIME,
+	FOREIGN KEY (`track_id`) REFERENCES `tracks` (`id`),
+	UNIQUE KEY (`track_id`),
+	PRIMARY KEY (`id`)
+);
+
+DROP TABLE IF EXISTS `featured_albums`;
+
+CREATE TABLE `featured_albums` (
+	`id`         INTEGER  NOT NULL AUTO_INCREMENT,
+	`album_id`   INTEGER  NOT NULL,
+	`start_date` DATETIME NOT NULL DEFAULT NOW(),
+	`end_date`   DATETIME,
+	FOREIGN KEY (`album_id`) REFERENCES `albums` (`id`),
+	UNIQUE KEY (`album_id`),
+	PRIMARY KEY (`id`)
+);
+
+
+DROP TABLE IF EXISTS `featured_playlists`;
+
+CREATE TABLE `featured_playlists` (
+	`id`          INTEGER  NOT NULL AUTO_INCREMENT,
+	`playlist_id` INTEGER  NOT NULL,
+	`start_date`  DATETIME NOT NULL DEFAULT NOW(),
+	`end_date`    DATETIME,
+	FOREIGN KEY (`playlist_id`) REFERENCES `playlists` (`id`),
+	UNIQUE KEY (`playlist_id`),
+	PRIMARY KEY (`id`)
+);
