@@ -46,6 +46,7 @@ CREATE TABLE `tracks` (
 	`title`    VARCHAR(256) NOT NULL,
 	`artist`   VARCHAR(128) NOT NULL,
 	`genre`    VARCHAR(64),
+	`url`      TEXT,
 	`album_id` INTEGER,
 	FOREIGN KEY (`album_id`) REFERENCES `albums` (`id`)
 		ON DELETE SET NULL,
