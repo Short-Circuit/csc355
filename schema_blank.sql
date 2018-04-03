@@ -1,4 +1,3 @@
-DROP TABLE IF EXISTS `users`;
 DROP TABLE IF EXISTS `featured_playlists`;
 DROP TABLE IF EXISTS `featured_albums`;
 DROP TABLE IF EXISTS `featured_tracks`;
