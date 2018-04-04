@@ -4,15 +4,26 @@
  * Created 3/26/2018
  */
 
-class UsernameInUseException extends Exception {
+class UserException extends Exception {
 
 }
 
-class EmailInUseException extends Exception{
+class UsernameInUseException extends UserException {
 
 }
 
-class InvalidCredentialsException extends Exception {
+class EmailInUseException extends UserException {
 
 }
 
+class InvalidCredentialsException extends UserException {
+
+}
+
+class TrackException extends Exception {
+
+}
+
+class TrackExistsException extends TrackException {
+
+}

@@ -29,6 +29,9 @@ class User {
 		$this->email_verified = $email_verified;
 	}
 	
+	/**
+	 * @throws PDOException
+	 */
 	private static function ensureDatabase() {
 		if (!static::$db) {
 			static::$db = new MusicPDO(
