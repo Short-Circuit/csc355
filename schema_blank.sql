@@ -60,6 +60,7 @@ CREATE TABLE `playlists` (
 	`genre`      VARCHAR(64),
 	FOREIGN KEY (`creator_id`) REFERENCES `users` (`id`)
 		ON DELETE CASCADE,
+	UNIQUE KEY (`title`, `creator_id`),
 	PRIMARY KEY (`id`)
 );
 

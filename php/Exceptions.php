@@ -27,3 +27,19 @@ class TrackException extends Exception {
 class TrackExistsException extends TrackException {
 
 }
+
+class AlbumException extends Exception {
+
+}
+
+class AlbumExistsException extends AlbumException {
+
+}
+
+class PlaylistException extends Exception {
+
+}
+
+class PlaylistExistsException extends PlaylistException {
+
+}

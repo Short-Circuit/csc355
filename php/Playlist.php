@@ -8,7 +8,7 @@ include_once "MusicPDO.php";
 include_once "MusicConstants.php";
 include_once "Exceptions.php";
 
-class Track {
+class Playlist {
 	private static $db;
 	private $id;
 	private $title;
@@ -18,7 +18,7 @@ class Track {
 	private $album_id;
 	
 	/**
-	 * Track constructor.
+	 * Playlist constructor.
 	 * @param $id int
 	 * @param $title string
 	 * @param $artist string
@@ -78,16 +78,25 @@ class Track {
 	}
 	
 	/**
-	 * @param $album_id int
+	 * @param $track_id int
+	 * @param int $index
 	 * @throws PDOException
 	 */
-	public function setAlbumId($album_id) {
+	public function addTrackToPlaylist($track_id, $index = -1) {
 		static::ensureDatabase();
-		$stmt = static::$db->prepare("UPDATE `tracks` SET `album_id`=:album_id WHERE `id`=:id");
-		$stmt->bindParam(":id", $this->id, PDO::PARAM_INT);
-		$stmt->bindParam(":album_id", $album_id, PDO::PARAM_INT);
+		if ($index < 0) {
+			$stmt = static::$db->prepare("SELECT MAX(`index`) FROM `playlist_entries` WHERE `playlist_id`=:playlist_id");
+			$stmt->bindParam(":playlist_id", $this->id, PDO::PARAM_INT);
+			$stmt->execute();
+			$results = $stmt->fetchAll(PDO::FETCH_COLUMN);
+			$index = $results[0] + 1;
+		}
+		$stmt = static::$db->prepare("REPLACE INTO `playlist_entries` (`playlist_id`, `track_id`, `index`) VALUES "
+				. "(:playlist_id, :track_id, :index)");
+		$stmt->bindParam(":playlist_id", $this->id, PDO::PARAM_INT);
+		$stmt->bindParam(":track_id", $track_id, PDO::PARAM_INT);
+		$stmt->bindParam(":index", $index, PDO::PARAM_INT);
 		$stmt->execute();
-		$this->album_id = $album_id;
 	}
 	
 	/**
@@ -107,37 +116,34 @@ class Track {
 	
 	/**
 	 * @param $title string
-	 * @param $artist string
+	 * @param $creator_id int
 	 * @param $genre string
-	 * @param $url \http\Url
-	 * @throws TrackExistsException
+	 * @throws PlaylistExistsException
 	 * @throws PDOException
 	 */
-	public static function createTrack($title, $artist, $genre, $url) {
+	public static function createPlaylist($title, $creator_id, $genre) {
 		static::ensureDatabase();
-		if (static::trackExists($title, $artist)) {
-			throw new TrackExistsException();
+		if (static::playlistExists($title, $creator_id)) {
+			throw new PlaylistExistsException();
 		}
-		$stmt = static::$db->prepare("INSERT INTO `tracks` (`title`, `artist`, `genre`, `url`, `album_id`) VALUES "
-				. "(:title, :artist, :genre, :url, NULL)");
+		$stmt = static::$db->prepare("INSERT INTO `playlists` (`title`, `creator_id`, `genre`) VALUES (:title, :creator_id, :genre)");
 		$stmt->bindParam(":title", $title, PDO::PARAM_STR);
-		$stmt->bindParam(":artist", $artist, PDO::PARAM_STR);
+		$stmt->bindParam(":creator_id", $creator_id, PDO::PARAM_INT);
 		$stmt->bindParam(":genre", $genre, PDO::PARAM_STR);
-		$stmt->bindParam(":url", $url == null ? null : $url->toString(), PDO::PARAM_STR);
 		$stmt->execute();
 	}
 	
 	/**
 	 * @param $title string
-	 * @param $artist string
+	 * @param $creator_id int
 	 * @return boolean
 	 * @throws PDOException
 	 */
-	public static function trackExists($title, $artist) {
+	public static function playlistExists($title, $creator_id) {
 		static::ensureDatabase();
-		$stmt = static::$db->prepare("SELECT COUNT(*) FROM `tracks` WHERE LOWER(`title`)=LOWER(:title) AND LOWER(`artist`)=LOWER(:artist)");
+		$stmt = static::$db->prepare("SELECT COUNT(*) FROM `playlists` WHERE LOWER(`title`)=LOWER(:title) AND `creator_id`=:creator_id");
 		$stmt->bindParam(":title", $title, PDO::PARAM_STR);
-		$stmt->bindParam(":artist", $artist, PDO::PARAM_STR);
+		$stmt->bindParam(":creator_id", $creator_id, PDO::PARAM_INT);
 		$stmt->execute();
 		$results = $stmt->fetchAll(PDO::FETCH_COLUMN);
 		return $results[0] | false;
