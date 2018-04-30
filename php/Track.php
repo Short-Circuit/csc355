@@ -156,11 +156,23 @@ class Track {
 		static::ensureDatabase();
 		$stmt = static::$db->prepare("SELECT * FROM `tracks` WHERE `id`=:id");
 		$stmt->bindParam(":id", $id, PDO::PARAM_INT);
+		$stmt->execute();
 		$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		if ($results) {
 			return new Track($results[0]["id"], $results[0]["title"], $results[0]["artist"], $results[0]["genre"], $results[0]["url"], $results[0]["album_id"]);
 		}
 		return null;
+	}
+	
+	/**
+	 * @return array
+	 * @throws PDOException
+	 */
+	public static function listTracks() {
+		static::ensureDatabase();
+		$stmt = static::$db->prepare("SELECT * FROM `tracks` ORDER BY `album_id` ASC, LOWER(`title`) ASC");
+		$stmt->execute();
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
 }
 
