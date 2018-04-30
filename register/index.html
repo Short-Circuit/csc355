@@ -15,5 +15,40 @@
 																			 required>
 			<input type="submit" value="Register">
 		</form>
+		
+		<table>
+			<thead>
+				<tr>
+					<th colspan="2">Registered users</th>
+				</tr>
+				<tr>
+					<th>Username</th>
+					<th>Email</th>
+				</tr>
+			</thead>
+			<tbody id="needtogetthisdone">
+			
+			</tbody>
+		</table>
 	</body>
+	
+	<script type="application/javascript">
+		var request = new XMLHttpRequest();
+		request.open("GET", "../php/User.php?method=listUsers");
+		request.onreadystatechange = function () {
+			if (request.readyState === 4) {
+				document.getElementById("needtogetthisdone").innerHTML = "";
+				console.log(request.responseText);
+				var obj = JSON.parse(request.responseText);
+				console.log(obj);
+				if (obj.success) {
+					obj.result.forEach(function (user) {
+						document.getElementById("needtogetthisdone").innerHTML += "<tr><td>" + user.username
+							+ "</td><td>" + user.email + "</td></tr>";
+					})
+				}
+			}
+		};
+		request.send();
+	</script>
 </html>

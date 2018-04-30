@@ -244,6 +244,13 @@ class User {
 		$results = $stmt->fetchAll(PDO::FETCH_COLUMN);
 		return $results[0] | false;
 	}
+	
+	public static function listUsers() {
+		static::ensureDatabase();
+		$stmt = static::$db->prepare("SELECT `username`, `email` FROM `users` ORDER BY `id` ASC");
+		$stmt->execute();
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	}
 }
 
 dynamicCall(User::class);
