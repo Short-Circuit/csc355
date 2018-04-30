@@ -7,15 +7,46 @@
 	</head>
 	<body>
 		<form action="../php/User.php?method=createUser" method="post">
-			<label for="input-username">Username</label><input id="input-username" name="username" type="text" required>
-			<label for="input-email">Email</label><input id="input-email" name="email" type="email" required>
-			<label for="input-password">Password</label><input id="input-password" name="password" type="password"
-															   required>
-			<label for="input-password-repeat">Repeat password</label><input id="input-password-repeat" type="password"
-																			 required>
-			<input type="submit" value="Register">
+			<table>
+				<tbody>
+					<tr>
+						<td>
+							<label for="input-username">Username</label>
+						</td>
+						<td>
+							<input id="input-username" name="username" type="text" required>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="input-email">Email</label>
+						</td>
+						<td>
+							<input id="input-email" name="email" type="email" required>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="input-password">Password</label>
+						</td>
+						<td>
+							<input id="input-password" name="password" type="password" required>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="input-password-repeat">Repeat password</label>
+						</td>
+						<td>
+							<input id="input-password-repeat" type="password" required>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2"><input type="submit" value="Register"></td>
+					</tr>
+				</tbody>
+			</table>
 		</form>
-		
 		<table>
 			<thead>
 				<tr>
@@ -45,7 +76,7 @@
 					obj.result.forEach(function (user) {
 						document.getElementById("needtogetthisdone").innerHTML += "<tr><td>" + user.username
 							+ "</td><td>" + user.email + "</td></tr>";
-					})
+					});
 				}
 			}
 		};
