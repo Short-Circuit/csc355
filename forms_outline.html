@@ -2,41 +2,30 @@
 <html>
     <head>
         <title>Tunez Music</title>
-		<link rel="stylesheet" href="styles.css">
     </head>
-    <body >
-	
-	<div class="navbar">
-        <a class="navmenu"href="home.html">Home</a>
-		<a class="navmenu"href="page2.html">Playlist</a>
-		<a class="navmenu"href="page2.html">Page3</a>
-		<a class="navmenu"href="page2.html">Page4</a>
-		<a class="navmenu"href="page2.html">Page5</a>
-		<a class="navmenu"href="page2.html">Page6</a>
-		<a class="navmenu"href="page2.html">Page7</a>
-		</div>
+	<script src = "forms_outline_validation.js"></script>
+    <body style="background-color:#ffbb00">
+        
         <h1 style="text-align: center">Tunez Music</h1>
-		
-        <div id="PUSH">
+        
         <h4>User Account Form:</h4>
-        <form action="" name="UserForm" >
-            User Full Name: <input type="text" class="User" name="username" size="10" maxlength="20" value=""/><br />
-            User Email: <input type="text" id="userEmail" class="User" name="email" size="10" maxlength="20" value=""/><br />       
-	  <input type="submit" value="Submit" />
-	  <input type = "reset" name = "reset"  value = "Reset" />
-        </form>
+<form action="" name="UserForm" onsubmit = "return(account_retrieve_validate());">
+User Full Name: <input type="text" class="User" name="username" size="10" maxlength="20" value=""/><br />
+User Email: <input type="text" class="User" name="email" size="10" maxlength="20" value=""/><br />       
+<input type="submit" value="Submit" />
+<input type = "reset" name = "reset"  value = "Reset" />
+</form>
         
         <br /><br />
-        <div>
+        
         <h4>Create Playlist:</h4>
-        <form action="" name="UserForm" >
+        <form action="" name="CreateForm" onsubmit = "return(create_playlist_validate());">
             Name of Playlist: <input type = "text" class="" name = "create" size="10" maxlength="20" value=""/><br />
-            Song: <input type = "text" class="Track" name = "track" size="10" maxlength="15" value=""/><br />
-            Song: <input type = "text" class="Track" name = "track" size="10" maxlength="15" value=""/><br />
-            Song: <input type = "text" class="Track" name = "track" size="10" maxlength="15" value=""/><br />
-            Song: <input type = "text" class="Track" name = "track" size="10" maxlength="15" value=""/><br /> 
-            Song: <input type = "text" class="Track" name = "track" size="10" maxlength="15" value=""/><br /> 
-			</div>
+            Song: <input type = "text" class="Track" name = "track1" size="10" maxlength="15" value=""/><br />
+            Song: <input type = "text" class="Track" name = "track2" size="10" maxlength="15" value=""/><br />
+            Song: <input type = "text" class="Track" name = "track3" size="10" maxlength="15" value=""/><br />
+            Song: <input type = "text" class="Track" name = "track4" size="10" maxlength="15" value=""/><br /> 
+            Song: <input type = "text" class="Track" name = "track5" size="10" maxlength="15" value=""/><br /> 
 	  <input type="submit" value="Save" />
 	  <input type = "reset" name = "reset"  value = "Reset" />
         </form>
@@ -44,11 +33,11 @@
         <br /><br />
         
         <h4>Retrieve Playlist:</h4>
-        <form action="" name="UserForm">
+        <form action="" name="RetrieveForm" onsubmit = "return(retrieve_playlist_validate());">
             User Full Name: <input type = "text" class="" name = "retrieve" size="10" maxlength="20" value=""/><br />   	
 	  <input type="submit" value="Retrieve" />
 	  <input type = "reset" name = "reset"  value = "Reset" />
         </form>
-        </div>
+        
     </body>
 </html>
