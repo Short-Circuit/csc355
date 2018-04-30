@@ -4,21 +4,22 @@
  * Created 4/4/2018
  */
 
-include_once "MusicPDO.php";
-include_once "MusicConstants.php";
-include_once "Exceptions.php";
+require_once "MusicPDO.php";
+require_once "MusicConstants.php";
+require_once "Exceptions.php";
+require_once "dynamic_call.php";
 
 class Album {
 	private static $db;
-	private $id;
-	private $title;
+	public $id;
+	public $title;
 	
 	/**
 	 * Album constructor.
 	 * @param $id int
 	 * @param $title string
 	 */
-	private function __construct($id, $title) {
+	private function __construct(int $id, string $title) {
 		$this->id = $id;
 		$this->title = $title;
 	}
@@ -57,7 +58,7 @@ class Album {
 	 * @throws AlbumExistsException
 	 * @throws PDOException
 	 */
-	public static function createAlbum($title) {
+	public static function createAlbum(string $title) {
 		static::ensureDatabase();
 		if (static::albumExists($title)) {
 			throw new AlbumExistsException();
@@ -72,7 +73,7 @@ class Album {
 	 * @return boolean
 	 * @throws PDOException
 	 */
-	public static function albumExists($title) {
+	public static function albumExists(string $title) {
 		static::ensureDatabase();
 		$stmt = static::$db->prepare("SELECT COUNT(*) FROM `albums` WHERE LOWER(`title`)=LOWER(:title)");
 		$stmt->bindParam(":title", $title, PDO::PARAM_STR);
@@ -80,4 +81,22 @@ class Album {
 		$results = $stmt->fetchAll(PDO::FETCH_COLUMN);
 		return $results[0] | false;
 	}
+	
+	/**
+	 * @param int $id
+	 * @return Album
+	 * @throws PDOException
+	 */
+	public static function getAlbum(int $id) {
+		static::ensureDatabase();
+		$stmt = static::$db->prepare("SELECT * FROM `albums` WHERE `id`=:id");
+		$stmt->bindParam(":id", $id, PDO::PARAM_INT);
+		$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		if ($results) {
+			return new Album($results[0]["id"], $results[0]["title"]);
+		}
+		return null;
+	}
 }
+
+dynamicCall(Album::class);

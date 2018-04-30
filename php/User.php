@@ -4,16 +4,17 @@
  * Created 3/26/2018
  */
 
-include_once "MusicPDO.php";
-include_once "MusicConstants.php";
-include_once "Exceptions.php";
+require_once "MusicPDO.php";
+require_once "MusicConstants.php";
+require_once "Exceptions.php";
+require_once "dynamic_call.php";
 
 class User {
 	private static $db;
-	private $id;
-	private $username;
-	private $email;
-	private $email_verified;
+	public $id;
+	public $username;
+	public $email;
+	public $email_verified;
 	
 	/**
 	 * User constructor.
@@ -22,7 +23,7 @@ class User {
 	 * @param $email string
 	 * @param $email_verified bool
 	 */
-	private function __construct($id, $username, $email, $email_verified) {
+	private function __construct(int $id, string $username, string $email, bool $email_verified) {
 		$this->id = $id;
 		$this->username = $username;
 		$this->email = $email;
@@ -77,7 +78,7 @@ class User {
 	 * @throws PDOException
 	 * @throws Exception
 	 */
-	public function updatePassword($new_password) {
+	public function updatePassword(string $new_password) {
 		static::ensureDatabase();
 		$salt = random_bytes(32);
 		$new_password = static::hashPassword($new_password, $salt);
@@ -93,7 +94,7 @@ class User {
 	 * @throws PDOException
 	 * @throws EmailInUseException
 	 */
-	public function updateEmail($new_email) {
+	public function updateEmail(string $new_email) {
 		static::ensureDatabase();
 		if (static::emailExists($new_email)) {
 			throw new EmailInUseException();
@@ -111,7 +112,7 @@ class User {
 	 * @throws PDOException
 	 * @throws UsernameInUseException
 	 */
-	public function updateUsername($new_username) {
+	public function updateUsername(string $new_username) {
 		static::ensureDatabase();
 		if (static::usernameExists($new_username)) {
 			throw new UsernameInUseException();
@@ -144,7 +145,7 @@ class User {
 	 * @param $salt string
 	 * @return string
 	 */
-	public static function hashPassword($password, $salt) {
+	public static function hashPassword(string $password, string $salt) {
 		return hash_pbkdf2("sha512", $password, $salt, 65535, 64, true);
 	}
 	
@@ -157,7 +158,7 @@ class User {
 	 * @throws UsernameInUseException
 	 * @throws Exception
 	 */
-	public static function createUser($username, $email, $password) {
+	public static function createUser(string $username, string $email, string $password) {
 		static::ensureDatabase();
 		if (static::usernameExists($username)) {
 			throw new UsernameInUseException();
@@ -183,7 +184,7 @@ class User {
 	 * @throws PDOException
 	 * @throws InvalidCredentialsException
 	 */
-	public static function loadUser($username_or_email, $password) {
+	public static function loadUser(string $username_or_email, string $password) {
 		static::ensureDatabase();
 		$stmt = static::$db->prepare("SELECT `id`, `username`, `email`, `email_verified`, `password_hash`, "
 				. "`password_salt` FROM `users` WHERE LOWER(`email`)=LOWER(:username) OR LOWER(`username`)=LOWER(:username)");
@@ -206,7 +207,7 @@ class User {
 	 * @return bool
 	 * @throws PDOException
 	 */
-	public static function userExists($username_or_email) {
+	public static function userExists(string $username_or_email) {
 		static::ensureDatabase();
 		$stmt = static::$db->prepare("SELECT COUNT(*) FROM `users` WHERE LOWER(`email`)=LOWER(:username) OR "
 				. "LOWER(`username`)=LOWER(:username)");
@@ -221,7 +222,7 @@ class User {
 	 * @return bool
 	 * @throws PDOException
 	 */
-	public static function usernameExists($username) {
+	public static function usernameExists(string $username) {
 		static::ensureDatabase();
 		$stmt = static::$db->prepare("SELECT COUNT(*) FROM `users` WHERE LOWER(`username`)=LOWER(:username)");
 		$stmt->bindParam(":username", $username, PDO::PARAM_STR);
@@ -235,7 +236,7 @@ class User {
 	 * @return bool
 	 * @throws PDOException
 	 */
-	public static function emailExists($email) {
+	public static function emailExists(string $email) {
 		static::ensureDatabase();
 		$stmt = static::$db->prepare("SELECT COUNT(*) FROM `users` WHERE LOWER(`email`)=LOWER(:email)");
 		$stmt->bindParam(":email", $email, PDO::PARAM_STR);
@@ -244,3 +245,5 @@ class User {
 		return $results[0] | false;
 	}
 }
+
+dynamicCall(User::class);

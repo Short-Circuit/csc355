@@ -4,18 +4,19 @@
  * Created 4/4/2018
  */
 
-include_once "MusicPDO.php";
-include_once "MusicConstants.php";
-include_once "Exceptions.php";
+require_once "MusicPDO.php";
+require_once "MusicConstants.php";
+require_once "Exceptions.php";
+require_once "dynamic_call.php";
 
 class Track {
 	private static $db;
-	private $id;
-	private $title;
-	private $artist;
-	private $genre;
-	private $url;
-	private $album_id;
+	public $id;
+	public $title;
+	public $artist;
+	public $genre;
+	public $url;
+	public $album_id;
 	
 	/**
 	 * Track constructor.
@@ -26,7 +27,7 @@ class Track {
 	 * @param $url string
 	 * @param $album_id int
 	 */
-	private function __construct($id, $title, $artist, $genre, $url, $album_id) {
+	private function __construct(int $id, string $title, string $artist, string $genre, string $url, int $album_id) {
 		$this->id = $id;
 		$this->title = $title;
 		$this->artist = $artist;
@@ -81,7 +82,7 @@ class Track {
 	 * @param $album_id int
 	 * @throws PDOException
 	 */
-	public function setAlbumId($album_id) {
+	public function setAlbumId(int $album_id) {
 		static::ensureDatabase();
 		$stmt = static::$db->prepare("UPDATE `tracks` SET `album_id`=:album_id WHERE `id`=:id");
 		$stmt->bindParam(":id", $this->id, PDO::PARAM_INT);
@@ -109,21 +110,24 @@ class Track {
 	 * @param $title string
 	 * @param $artist string
 	 * @param $genre string
-	 * @param $url \http\Url
+	 * @param $url \http\Url|string
 	 * @throws TrackExistsException
 	 * @throws PDOException
 	 */
-	public static function createTrack($title, $artist, $genre, $url) {
+	public static function createTrack(string $title, string $artist, string $genre, $url) {
 		static::ensureDatabase();
 		if (static::trackExists($title, $artist)) {
 			throw new TrackExistsException();
+		}
+		if ($url instanceof \http\Url) {
+			$url = $url->toString();
 		}
 		$stmt = static::$db->prepare("INSERT INTO `tracks` (`title`, `artist`, `genre`, `url`, `album_id`) VALUES "
 				. "(:title, :artist, :genre, :url, NULL)");
 		$stmt->bindParam(":title", $title, PDO::PARAM_STR);
 		$stmt->bindParam(":artist", $artist, PDO::PARAM_STR);
 		$stmt->bindParam(":genre", $genre, PDO::PARAM_STR);
-		$stmt->bindParam(":url", $url == null ? null : $url->toString(), PDO::PARAM_STR);
+		$stmt->bindParam(":url", $url == null ? null : $url, PDO::PARAM_STR);
 		$stmt->execute();
 	}
 	
@@ -133,7 +137,7 @@ class Track {
 	 * @return boolean
 	 * @throws PDOException
 	 */
-	public static function trackExists($title, $artist) {
+	public static function trackExists(string $title, string $artist) {
 		static::ensureDatabase();
 		$stmt = static::$db->prepare("SELECT COUNT(*) FROM `tracks` WHERE LOWER(`title`)=LOWER(:title) AND LOWER(`artist`)=LOWER(:artist)");
 		$stmt->bindParam(":title", $title, PDO::PARAM_STR);
@@ -142,4 +146,22 @@ class Track {
 		$results = $stmt->fetchAll(PDO::FETCH_COLUMN);
 		return $results[0] | false;
 	}
+	
+	/**
+	 * @param int $id
+	 * @return Track
+	 * @throws PDOException
+	 */
+	public static function getPlaylist(int $id) {
+		static::ensureDatabase();
+		$stmt = static::$db->prepare("SELECT * FROM `tracks` WHERE `id`=:id");
+		$stmt->bindParam(":id", $id, PDO::PARAM_INT);
+		$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		if ($results) {
+			return new Track($results[0]["id"], $results[0]["title"], $results[0]["artist"], $results[0]["genre"], $results[0]["url"], $results[0]["album_id"]);
+		}
+		return null;
+	}
 }
+
+dynamicCall(Track::class);

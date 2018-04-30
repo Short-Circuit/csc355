@@ -4,35 +4,30 @@
  * Created 4/4/2018
  */
 
-include_once "MusicPDO.php";
-include_once "MusicConstants.php";
-include_once "Exceptions.php";
+require_once "MusicPDO.php";
+require_once "MusicConstants.php";
+require_once "Exceptions.php";
+require_once "dynamic_call.php";
 
 class Playlist {
 	private static $db;
-	private $id;
-	private $title;
-	private $artist;
-	private $genre;
-	private $url;
-	private $album_id;
+	public $id;
+	public $title;
+	public $creator_id;
+	public $genre;
 	
 	/**
 	 * Playlist constructor.
 	 * @param $id int
 	 * @param $title string
-	 * @param $artist string
+	 * @param int $creator_id
 	 * @param $genre string
-	 * @param $url string
-	 * @param $album_id int
 	 */
-	private function __construct($id, $title, $artist, $genre, $url, $album_id) {
+	private function __construct(int $id, string $title, int $creator_id, string $genre) {
 		$this->id = $id;
 		$this->title = $title;
-		$this->artist = $artist;
 		$this->genre = $genre;
-		$this->url = $url;
-		$this->album_id = $album_id;
+		$this->creator_id = $creator_id;
 	}
 	
 	/**
@@ -50,10 +45,10 @@ class Playlist {
 	}
 	
 	/**
-	 * @return string
+	 * @return int
 	 */
-	public function getArtist() {
-		return $this->artist;
+	public function getCreatorId() {
+		return $this->creator_id;
 	}
 	
 	/**
@@ -64,25 +59,11 @@ class Playlist {
 	}
 	
 	/**
-	 * @return string
-	 */
-	public function getUrl() {
-		return $this->url;
-	}
-	
-	/**
-	 * @return int
-	 */
-	public function getAlbumId() {
-		return $this->album_id;
-	}
-	
-	/**
 	 * @param $track_id int
 	 * @param int $index
 	 * @throws PDOException
 	 */
-	public function addTrackToPlaylist($track_id, $index = -1) {
+	public function addTrackToPlaylist(int $track_id, int $index = -1) {
 		static::ensureDatabase();
 		if ($index < 0) {
 			$stmt = static::$db->prepare("SELECT MAX(`index`) FROM `playlist_entries` WHERE `playlist_id`=:playlist_id");
@@ -121,7 +102,7 @@ class Playlist {
 	 * @throws PlaylistExistsException
 	 * @throws PDOException
 	 */
-	public static function createPlaylist($title, $creator_id, $genre) {
+	public static function createPlaylist(string $title, int $creator_id, string $genre) {
 		static::ensureDatabase();
 		if (static::playlistExists($title, $creator_id)) {
 			throw new PlaylistExistsException();
@@ -139,7 +120,7 @@ class Playlist {
 	 * @return boolean
 	 * @throws PDOException
 	 */
-	public static function playlistExists($title, $creator_id) {
+	public static function playlistExists(string $title, int $creator_id) {
 		static::ensureDatabase();
 		$stmt = static::$db->prepare("SELECT COUNT(*) FROM `playlists` WHERE LOWER(`title`)=LOWER(:title) AND `creator_id`=:creator_id");
 		$stmt->bindParam(":title", $title, PDO::PARAM_STR);
@@ -148,4 +129,22 @@ class Playlist {
 		$results = $stmt->fetchAll(PDO::FETCH_COLUMN);
 		return $results[0] | false;
 	}
+	
+	/**
+	 * @param int $id
+	 * @return Playlist
+	 * @throws PDOException
+	 */
+	public static function getPlaylist(int $id) {
+		static::ensureDatabase();
+		$stmt = static::$db->prepare("SELECT * FROM `playlists` WHERE `id`=:id");
+		$stmt->bindParam(":id", $id, PDO::PARAM_INT);
+		$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		if ($results) {
+			return new Playlist($results[0]["id"], $results[0]["title"], $results[0]["creator_id"], $results[0]["genre"]);
+		}
+		return null;
+	}
 }
+
+dynamicCall(Playlist::class);
