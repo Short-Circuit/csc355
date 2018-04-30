@@ -152,7 +152,7 @@ class Track {
 	 * @return Track
 	 * @throws PDOException
 	 */
-	public static function getPlaylist(int $id) {
+	public static function getTrack(int $id) {
 		static::ensureDatabase();
 		$stmt = static::$db->prepare("SELECT * FROM `tracks` WHERE `id`=:id");
 		$stmt->bindParam(":id", $id, PDO::PARAM_INT);
