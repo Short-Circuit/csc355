@@ -6,7 +6,7 @@ margin-left:75px;
 .navbar {
   overflow: hidden;
   background-color: black;
-  font-family: Arial;
+  font-family: 'Raleway', sans-serif;
 }
 a:hover{color:red;}
 .navmenu{
@@ -19,8 +19,11 @@ a:hover{color:red;}
 	margin-left:25px;
 }
 #PUSH{margin-left:40%;
- background-color:grey;
+ background-color:lightslategray;
  margin-right:30%;
  border:solid 10px black;}
  
  #current{color:red;}
+
+h1 {font-family: 'Raleway', sans-serif; font-weight: 700}
+h4 {font-family: 'Raleway', sans-serif; font-weight: 700}
