@@ -1,19 +1,141 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Tunez Music</title>
 		<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-		<script src="forms_outline_validation.js"></script>
+		<link rel="stylesheet" href="styles.css">
+		<title>Tunez Music - Home Page</title>
+		<style>
+			
+			.accordion {
+				font-family: 'Raleway', sans-serif;
+				background-color: white;
+				font-size: 18px;
+				color: black;
+				letter-spacing: 0.6px;
+				margin-left: 70px;
+				cursor: pointer;
+				padding: 14px;
+				width: 86.2%;
+				text-align: left;
+				border: none;
+				outline: none;
+				transition: 0.4s;
+			}
+			
+			.accordion:hover {
+				background-color: lightslategray;
+			}
+			
+			.panel {
+				padding: 1.5px 18px;
+				background-color: orange;
+				color: rgba(0, 0, 0, 0.5);
+				size: 15px;
+				font-weight: 400;
+				margin-right: 55px;
+				margin-left: 55px;
+				letter-spacing: 0.4px;
+				line-height: 1.6em;
+				max-height: 0;
+				overflow: hidden;
+				transition: max-height 0.7s ease-out;
+			}
+			
+			.accordion:after {
+				content: '\FF0B';
+				font-size: 18px;
+				color: black;
+				font-weight: bold;
+				float: right;
+				margin-left: 5px;
+			}
+			
+			.accordion.active:after {
+				content: "\FF0D";
+			}
+		
+		</style>
 	</head>
-	<body style="background-color:#ffbb00;text-align:center;">
-		
+	<body>
+		<div class="navbar">
+			<a class="navmenu" href="index.html">Home</a>
+			<a class="navmenu" href="accounts.html">Playlist</a>
+			<a class="navmenu" href="contact.html">Contact</a>
+			<a class="navmenu" href="suggestions.html">Suggestions</a>
+			<a class="navmenu" href="similar.html">Similar Sites</a>
+			<a class="navmenu" href="donate.html">Donate</a>
+		</div>
 		<h1 style="text-align: center">Tunez Music</h1>
+		<h4 style="text-align: center">Home</h4>
 		
-		<h4>Log into your Tunez account here!</h4>
-		<form action="sign_in.html"><input type="submit" value="Login"></form>
-		
-		
-		<h4>New to Tunez Music? Create an account up now!</h4>
-		<form action="sign_up.html"><input type="submit" value="Sign up"></form>
+		<div>
+			<button class="accordion">WHAT IS TUNEZ MUSIC?</button>
+			<div class="panel">
+				<br/>
+				<p>Other than being a university project for a CSC355 class, Tunez Music is a music website that allows
+					the user to add their favorite songs into a playlist and much more. As it is a work in progress
+					there is much that could be added to the site, but hopefully Tunez Music could someday reach the
+					same level as Spotify, or Apple Music. Below are just a couple of the things that our team believes
+					in:
+				<ul>
+					<li>Modern and aesthetically pleasing website design.</li>
+					<li>Tasteful song and artist choices.</li>
+					<li>Flawless and functioning web apps.</li>
+				</ul>
+			</div>
+			
+			<button class="accordion">HOW DO I USE THE SITE?</button>
+			<div class="panel">
+				<br/>
+				<p>We tried to make the website as user-friendly and functionable as possible. Also seeing how there
+					isn't much that you can do yet with the website, that shouldn't be a problem in trying to learn how
+					to use it. Taking a look at Tunez Music, you will see multiple pages... each page will have their
+					own purpose or function. The main page that does a lot of work is the form page. This allows the
+					user to create a playlist which will be created in a database, then the user can add songs into this
+					playlist and someday be able to save this playlist to their account. For any other help, feel free
+					to contact the Tunez team!</p><br/>
+			</div>
+			
+			<button class="accordion">HOW DO I CONTACT THE TUNEZ TEAM?</button>
+			<div class="panel">
+				<br/>
+				<p>At the top of any page you will see a navigation bar with the titles of each page, there you should
+					find a contact page. On this contact page there will be a contact form. Fill the form out and a
+					member of the team will reach out to you within 24 hours.</p><br/>
+			</div>
+			
+			<button class="accordion">WHAT IS TUNEZ MUSIC COMPARABLE TO?</button>
+			<div class="panel">
+				<br/>
+				<p>Remembering that Tunez Music is a school project and not yet finished makes taking the website not
+					too seriously. However, the Tunez Team tried to model the website off of the same model as a few
+					very popular music sites.</p>
+				<p><i>A couple of the sites you could compare Tunez Music too:</i></p>
+				<ul>
+					<li>Spotify</li>
+					<li>Apple Music</li>
+					<li>Soundcloud</li>
+				</ul>
+				<br/>
+			</div>
+			<script>
+				var acc = document.getElementsByClassName("accordion");
+				var i;
+				
+				for (i = 0; i < acc.length; i++) {
+					acc[i].addEventListener("click", function () {
+						this.classList.toggle("active");
+						var panel = this.nextElementSibling;
+						if (panel.style.maxHeight) {
+							panel.style.maxHeight = null;
+						}
+						else {
+							panel.style.maxHeight = panel.scrollHeight + "px";
+						}
+					});
+				}
+			</script>
+		</div>
+	
 	</body>
 </html>
