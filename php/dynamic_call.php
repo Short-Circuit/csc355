@@ -48,6 +48,7 @@ function dynamicCall(string $class) {
 					$result["result"] = call_user_func_array(array($class, $method), $values);
 				}
 				catch (Throwable $e) {
+					$result["message"] = "ERR";
 					$result["success"] = false;
 					$result["thrown"] = get_class($e);
 				}

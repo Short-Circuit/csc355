@@ -3,7 +3,7 @@
 	<head>
 		<title>Tunez Music</title>
 		<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-		<script src="validation.js"></script>
+		<script src="js/validation.js"></script>
 	</head>
 	<body style="background-color:#ffbb00;text-align:center;">
 		<h1 style="text-align: center">Tunez Music</h1>
@@ -23,7 +23,8 @@
 		<br/><br/>
 		
 		<h4>Retrieve Playlist:</h4>
-		<form action="php/Playlist.php?method=searchPlaylists" name="RetrieveForm" onsubmit="return(retrieve_playlist_validate());">
+		<form action="php/Playlist.php" name="RetrieveForm" onsubmit="return(retrieve_playlist_validate());">
+			<input style="display: none;" contenteditable="false" type="text" name="method" value="searchPlaylists">
 			Playlist Name: <input type="text" class="" name="title" size="10" maxlength="20" value=""/><br/>
 			<input type="submit" value="Retrieve"/>
 			<input type="reset" name="reset" value="Reset"/>

@@ -1,0 +1,52 @@
+body {
+	background-color: orange;
+}
+
+.Track {
+	margin-left: 75px;
+}
+
+#userEmail {
+	margin-left: 30px;
+}
+
+.navbar {
+	overflow: hidden;
+	background-color: black;
+	font-family: 'Raleway', sans-serif;
+}
+
+a:hover {
+	color: red;
+}
+
+.navmenu {
+	float: left;
+	font-size: 16px;
+	color: white;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+	margin-left: 25px;
+}
+
+#PUSH {
+	margin-left: 40%;
+	background-color: lightslategray;
+	margin-right: 30%;
+	border: solid 10px black;
+}
+
+#current {
+	color: red;
+}
+
+h1 {
+	font-family: 'Raleway', sans-serif;
+	font-weight: 700
+}
+
+h4 {
+	font-family: 'Raleway', sans-serif;
+	font-weight: 700
+}
