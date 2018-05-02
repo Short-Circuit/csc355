@@ -40,42 +40,37 @@
 				background-color: lightslategray;
 				padding: 20px;
 			}
-		<script type = "text/javascript">
-			function check(){
-					if (document.Send.firstname.value == "")
-	{
-		alert("Type a first name for this message");
-		document.Send.firstname.focus();
-		return false;
-	}
-	if (document.Send.lastname.value == "")
-	{
-		alert("Type a last name for this message;
-		document.Send.lastname.focus();
-		return false;
-	}
-	if (document.Send.contact.value == "")
-	{
-		alert("Type an email for this message");
-		document.Send.contact.focus();
-		return false;
-	}
-	if (!(document.Send.contact.value.includes ("@")) || !(document.Send.contact.value.includes (".")) || document.Send.contact.value.indexOf("@") == 0 || document.Send.contact.value.indexOf("@") < document.Send.contact.value.indexOf("."))
-	{
-		alert("Please provide a valid e-mail address!");
-		document.Send.contact.focus();
-		return false;
-	}
-	if (document.Send.subject.value == "")
-	{
-		alert ("Please provide a message for us to review!");
-		document.Send.subject.focus();
-		return false;
-	}
+		</style>
+		<script type="application/javascript">
+			function check() {
+				if (document.Send.firstname.value == "") {
+					alert("Type a first name for this message");
+					document.Send.firstname.focus();
+					return false;
+				}
+				if (document.Send.lastname.value == "") {
+					alert("Type a last name for this message;
+					document.Send.lastname.focus();
+					return false;
+				}
+				if (document.Send.contact.value == "") {
+					alert("Type an email for this message");
+					document.Send.contact.focus();
+					return false;
+				}
+				if (!(document.Send.contact.value.includes("@")) || !(document.Send.contact.value.includes(".")) || document.Send.contact.value.indexOf("@") == 0 || document.Send.contact.value.indexOf("@") < document.Send.contact.value.indexOf(".")) {
+					alert("Please provide a valid e-mail address!");
+					document.Send.contact.focus();
+					return false;
+				}
+				if (document.Send.subject.value == "") {
+					alert("Please provide a message for us to review!");
+					document.Send.subject.focus();
+					return false;
+				}
 				return true;
 			}
-			</script>
-		</style>
+		</script>
 	</head>
 	<body>
 		<div class="navbar">
@@ -90,7 +85,7 @@
 		<h4 style="text-align: center; color:black;">Contact</h4>
 		
 		<div class="container">
-			<form action="/action_page.php" onsubmit = "return(check());" name = "Send">
+			<form action="/action_page.php" onsubmit="return(check());" name="Send">
 				<label for="fname">First Name</label>
 				<input type="text" id="fname" name="firstname" placeholder="Your name..">
 				
