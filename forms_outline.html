@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Tunez Music</title>
+        <title>Tunez Music - Playlist</title>
 		<link rel="stylesheet" href="styles.css">
     </head>
     <body >
 	
 	<div class="navbar">
         <a class="navmenu"href="home.html">Home</a>
-		<a class="navmenu"href="page2.html">Playlist</a>
-		<a class="navmenu"href="page2.html">Page3</a>
-		<a class="navmenu"href="page2.html">Page4</a>
-		<a class="navmenu"href="page2.html">Page5</a>
-		<a class="navmenu"href="page2.html">Page6</a>
-		<a class="navmenu"href="page2.html">Page7</a>
+		<a class="navmenu"href="forms_outline.html">Playlist</a>
+		<a class="navmenu"href="contact.html">Contact</a>
+		<a class="navmenu"href="suggestions.html">Suggestions</a>
+		<a class="navmenu"href="similar.html">Similar Sites</a>
+		<a class="navmenu"href="donate.html">Donate</a>
 		</div>
 	<script src = "forms_outline_validation.js"></script>
         <h1 style="text-align: center">Tunez Music</h1>
-
-	<div id="PUSH">
+        <h4 style="text-align: center">Playlist</h4>
+		
+        <div id="PUSH">
         <h4>User Account Form:</h4>
 <form action="" name="UserForm" onsubmit = "return(account_retrieve_validate());">
 User Full Name: <input type="text" class="User" name="username" size="10" maxlength="20" value=""/><br />
@@ -28,7 +28,6 @@ User Email: <input type="text" class="User" name="email" size="10" maxlength="20
 </form>
         
         <br /><br />
-        <div>
         <h4>Create Playlist:</h4>
         <form action="" name="CreateForm" onsubmit = "return(create_playlist_validate());">
             Name of Playlist: <input type = "text" class="" name = "create" size="10" maxlength="20" value=""/><br />
@@ -50,6 +49,6 @@ User Email: <input type="text" class="User" name="email" size="10" maxlength="20
 	  <input type="submit" value="Retrieve" />
 	  <input type = "reset" name = "reset"  value = "Reset" />
         </form>
-	</div>
+      </div>
     </body>
 </html>

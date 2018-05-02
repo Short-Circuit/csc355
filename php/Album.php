@@ -91,11 +91,23 @@ class Album {
 		static::ensureDatabase();
 		$stmt = static::$db->prepare("SELECT * FROM `albums` WHERE `id`=:id");
 		$stmt->bindParam(":id", $id, PDO::PARAM_INT);
+		$stmt->execute();
 		$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		if ($results) {
 			return new Album($results[0]["id"], $results[0]["title"]);
 		}
 		return null;
+	}
+	
+	/**
+	 * @return array
+	 * @throws PDOException
+	 */
+	public static function listAlbums() {
+		static::ensureDatabase();
+		$stmt = static::$db->prepare("SELECT * FROM `albums` ORDER BY `title` ASC");
+		$stmt->execute();
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
 }
 

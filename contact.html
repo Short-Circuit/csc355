@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="styles.css">
+    <title>Tunez - Contact</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {font-family: 'Raleway', sans-serif; color:white;}
+
+input[type=text], select, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    resize: vertical;
+}
+
+input[type=submit] {
+    background-color: orange;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: red;
+}
+
+.container {
+    border-radius: 5px;
+    background-color: lightslategray;
+    padding: 20px;
+}
+</style>
+</head>
+<body>
+	<div class="navbar">
+        <a class="navmenu"href="home.html">Home</a>
+		<a class="navmenu"href="forms_outline.html">Playlist</a>
+		<a class="navmenu"href="contact.html">Contact</a>
+		<a class="navmenu"href="suggestions.html">Suggestions</a>
+		<a class="navmenu"href="similar.html">Similar Sites</a>
+		<a class="navmenu"href="donate.html">Donate</a>
+		</div>
+        <h1 style="text-align: center; color:black;">Tunez Music</h1>
+        <h4 style="text-align: center; color:black;">Contact</h4>
+
+<div class="container">
+  <form action="/action_page.php">
+    <label for="fname">First Name</label>
+    <input type="text" id="fname" name="firstname" placeholder="Your name..">
+
+    <label for="lname">Last Name</label>
+    <input type="text" id="lname" name="lastname" placeholder="Your last name..">
+    
+    <label for="email">Email</label>
+    <input type="text" id="email" name="contact" placeholder="Your Email..">
+
+    <label for="subject">Subject</label>
+    <textarea id="subject" name="subject" placeholder="What do you need?.." style="height:200px"></textarea>
+
+    <input type="submit" value="Submit" onclick="myFunction();">
+  </form>
+</div>
+    
+<script>
+function myFunction() {
+    alert("Thank You! Your message has been sent. You will get a reply within the next 24 hours!");
+}
+</script>
+
+</body>
+</html>

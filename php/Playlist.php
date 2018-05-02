@@ -139,11 +139,32 @@ class Playlist {
 		static::ensureDatabase();
 		$stmt = static::$db->prepare("SELECT * FROM `playlists` WHERE `id`=:id");
 		$stmt->bindParam(":id", $id, PDO::PARAM_INT);
+		$stmt->execute();
 		$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		if ($results) {
 			return new Playlist($results[0]["id"], $results[0]["title"], $results[0]["creator_id"], $results[0]["genre"]);
 		}
 		return null;
+	}
+	
+	/**
+	 * @param int $creator_id
+	 * @return array
+	 * @throws PDOException
+	 */
+	public static function listPlaylists(int $creator_id) {
+		static::ensureDatabase();
+		$query = "SELECT * FROM `playlists`";
+		$id_specified = isset($creator_id) && $creator_id !== null;
+		if ($id_specified) {
+			$query .= " WHERE `creator_id`=:creator_id";
+		}
+		$stmt = self::$db->prepare($query);
+		if ($id_specified) {
+			$stmt->bindParam(":creator_id", $creator_id, PDO::PARAM_INT);
+		}
+		$stmt->execute();
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
 }
 

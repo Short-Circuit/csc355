@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="styles.css">
+        <title>Tunez - Suggestions</title>
+    </head>
+    <body>
+        	
+	<div class="navbar">
+        <a class="navmenu"href="home.html">Home</a>
+		<a class="navmenu"href="forms_outline.html">Playlist</a>
+		<a class="navmenu"href="contact.html">Contact</a>
+		<a class="navmenu"href="suggestions.html">Suggestions</a>
+		<a class="navmenu"href="similar.html">Similar Sites</a>
+		<a class="navmenu"href="donate.html">Donate</a>
+		</div>
+        <h1 style="text-align: center">Tunez Music</h1>
+        <h4 style="text-align: center">Suggestions</h4>
+        <h6 style="text-align: center; font-family: 'Raleway', sans-serif; font-weight: 700;">Organized by top artists in each Genre</h6>
+        
+        <button class="accordion">INDIE</button>
+  <div class="panel">
+    <br/>
+<ul>
+  <li>Arctic Monkeys</li>
+  <li>The Killers</li>
+  <li>RadioHead</li>
+    <li>Bon Iver</li>
+</ul>
+      <br/>
+    </div>
+    
+    <button class="accordion">RAP / HIP HOP</button>
+<div class="panel">
+  <br/>
+    <ul>
+  <li>Drake</li>
+  <li>Kendrick Lamar</li>
+  <li>Post Malone</li>
+    <li>Chance the Rapper</li>
+</ul>
+<br/>
+</div>
+
+<button class="accordion">COUNTRY</button>
+<div class="panel">
+  <br/>
+    <ul>
+  <li>Keith Urban</li>
+  <li>Tim Mcgraw</li>
+  <li>Carrie Underwood</li>
+    <li>Blake Shelton</li>
+</ul>
+    <br/>
+</div>
+    
+<button class="accordion">R+B</button>
+<div class="panel">
+  <br/>
+    <ul>
+  <li>Bruno Mars</li>
+  <li>The Weeknd</li>
+  <li>SZA</li>
+    <li>Chris Brown</li>
+</ul>
+  <br/>
+</div>
+        
+        <button class="accordion">POP</button>
+<div class="panel">
+  <br/>
+    <ul>
+        <li>Justin Bieber</li>
+        <li>Michael Jackson</li>
+        <li>Taylor Swift</li>
+        <li>Justin Timberlake</li>
+    </ul>
+  <br/>
+</div>
+        <style>    
+
+.accordion{ 
+    font: raleway;
+    background-color: white;
+    font-size: 18px;
+    color: black;
+    letter-spacing: 0.6px;
+    margin-left: 70px;
+    cursor: pointer;
+    padding: 14px;
+    width: 86.2%;
+    text-align: left;
+    border: none;
+    outline: none;
+    transition: 0.4s;
+}
+    
+.accordion:hover {
+    background-color: lightslategray;
+}
+
+.panel {
+    padding: 1.5px 18px;
+    background-color: orange;
+    color: rgba(0,0,0,0.5);
+    size: 15px;
+    font-weight: 400;
+    margin-right: 55px;
+    margin-left: 55px;
+    letter-spacing: 0.4px;
+    line-height: 1.6em;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.7s ease-out;
+}
+.accordion:after {
+    content: '\FF0B';
+    font-size: 18px;
+    color: black;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+
+.accordion.active:after {
+    content: "\FF0D";
+}
+      
+  </style>
+    
+  <script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  });
+}
+  </script>
+        
+    </body>
+</html>
