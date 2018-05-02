@@ -14,7 +14,7 @@ function dynamicCall(string $class) {
 	// Ensure the "method" parameter is set
 	if (!isset($_REQUEST["method"])) {
 		$result["success"] = false;
-		$result["message"] = "Required parameter \"method\" is missing";
+		$result["message"] = "Required parameter 'method' is missing";
 	}
 	else {
 		$method = $_REQUEST["method"];
@@ -36,7 +36,7 @@ function dynamicCall(string $class) {
 				if (!$arg_present && !$param->isDefaultValueAvailable()) {
 					$type = $param->hasType() ? $param->getType()->getName() : "mixed";
 					$result["success"] = false;
-					$result["message"] = "The required parameter $name ($type) was not defined";
+					$result["message"] = "The required parameter '$name' ($type) was not defined";
 					break;
 				}
 				// Set the parameter in the array
