@@ -174,6 +174,19 @@ class Track {
 		$stmt->execute();
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
+	
+	/**
+	 * @param string $title
+	 * @return array
+	 * @throws PDOException
+	 */
+	public static function searchTrack(string $title) {
+		static::ensureDatabase();
+		$stmt = static::$db->prepare("SELECT * FROM `tracks` WHERE LOWER(`track`) LIKE CONCAT('%', LOWER(:title), '%') ORDER BY `album_id` ASC, LOWER(`title`) ASC");
+		$stmt->bindParam(":title", $title, PDO::PARAM_STR);
+		$stmt->execute();
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	}
 }
 
 dynamicCall(Track::class);

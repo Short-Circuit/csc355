@@ -109,6 +109,19 @@ class Album {
 		$stmt->execute();
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
+	
+	/**
+	 * @param string $title
+	 * @return array
+	 * @throws PDOException
+	 */
+	public static function searchAlbums(string $title) {
+		static::ensureDatabase();
+		$stmt = static::$db->prepare("SELECT * FROM `albums` WHERE LOWER(`title`) LIKE CONCAT('%', LOWER(:title), '%') ORDER BY LOWER(`title`) ASC");
+		$stmt->bindParam(":title", $title, PDO::PARAM_STR);
+		$stmt->execute();
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	}
 }
 
 dynamicCall(Album::class);

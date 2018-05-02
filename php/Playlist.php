@@ -148,11 +148,11 @@ class Playlist {
 	}
 	
 	/**
-	 * @param int $creator_id
+	 * @param int [$creator_id]
 	 * @return array
 	 * @throws PDOException
 	 */
-	public static function listPlaylists(int $creator_id) {
+	public static function listPlaylists(int $creator_id = null) {
 		static::ensureDatabase();
 		$query = "SELECT * FROM `playlists`";
 		$id_specified = isset($creator_id) && $creator_id !== null;
@@ -160,6 +160,29 @@ class Playlist {
 			$query .= " WHERE `creator_id`=:creator_id";
 		}
 		$stmt = self::$db->prepare($query);
+		if ($id_specified) {
+			$stmt->bindParam(":creator_id", $creator_id, PDO::PARAM_INT);
+		}
+		$stmt->execute();
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	}
+	
+	/**
+	 * @param string $title
+	 * @param int [$creator_id]
+	 * @return array
+	 * @throws PDOException
+	 */
+	public static function searchPlaylists(string $title, int $creator_id = null) {
+		static::ensureDatabase();
+		$id_specified = isset($creator_id) && $creator_id !== null;
+		$query = "SELECT * FROM `playlists` WHERE LOWER(`title`) LIKE CONCAT('%', LOWER(:title), '%')";
+		if ($id_specified) {
+			$query .= " AND `creator_id`=:creator_id";
+		}
+		$query .= " ORDER BY LOWER(`title`) ASC";
+		$stmt = static::$db->prepare($query);
+		$stmt->bindParam(":title", $title, PDO::PARAM_STR);
 		if ($id_specified) {
 			$stmt->bindParam(":creator_id", $creator_id, PDO::PARAM_INT);
 		}
