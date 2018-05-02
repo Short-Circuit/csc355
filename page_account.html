@@ -23,8 +23,8 @@
 		<br/><br/>
 		
 		<h4>Retrieve Playlist:</h4>
-		<form action="" name="RetrieveForm" onsubmit="return(retrieve_playlist_validate());">
-			Playlist Name: <input type="text" class="" name="retrieve" size="10" maxlength="20" value=""/><br/>
+		<form action="php/Playlist.php?method=searchPlaylists" name="RetrieveForm" onsubmit="return(retrieve_playlist_validate());">
+			Playlist Name: <input type="text" class="" name="title" size="10" maxlength="20" value=""/><br/>
 			<input type="submit" value="Retrieve"/>
 			<input type="reset" name="reset" value="Reset"/>
 		</form>
